@@ -18,7 +18,7 @@ public class App {
 
     private static final Scanner in = new Scanner(System.in);
     private static final TabuleiroService tabuleiroPrinter = new TabuleiroPrinter();
-    private static final CalculadoraNota calculadoraNota = new CalculadoraNotaPadrao();
+    private static final CalculadoraNota calculadoraNota = new CalculadoraNotaPorAcertos();
     private static final ParticipanteSelector participanteSelector =
             new ConsoleSelector(participantes, provas, in);
     private static final ProvaSelector provaSelector =
