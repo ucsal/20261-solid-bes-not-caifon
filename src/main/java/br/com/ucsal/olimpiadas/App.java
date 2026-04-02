@@ -19,6 +19,10 @@ public class App {
     private static final Scanner in = new Scanner(System.in);
     private static final TabuleiroService tabuleiroPrinter = new TabuleiroPrinter();
     private static final CalculadoraNota calculadoraNota = new CalculadoraNotaPadrao();
+    private static final ParticipanteSelector participanteSelector =
+            new ConsoleSelector(participantes, provas, in);
+    private static final ProvaSelector provaSelector =
+            new ConsoleSelector(participantes, provas, in);
 
     public static void main(String[] args) {
         seed();
@@ -92,7 +96,7 @@ public class App {
             return;
         }
 
-        var provaId = escolherProva();
+        var provaId = provaSelector.escolherProva();
         if (provaId == null)
             return;
 
@@ -137,11 +141,11 @@ public class App {
             return;
         }
 
-        var participanteId = escolherParticipante();
+        var participanteId = participanteSelector.escolherParticipante();
         if (participanteId == null)
             return;
 
-        var provaId = escolherProva();
+        var provaId = provaSelector.escolherProva();
         if (provaId == null)
             return;
 
@@ -199,48 +203,6 @@ public class App {
         for (var t : tentativas) {
             System.out.printf("#%d | participante=%d | prova=%d | nota=%d/%d%n", t.getId(),
                     t.getParticipanteId(), t.getProvaId(), calculadoraNota.calcular(t), t.getRespostas().size());
-        }
-    }
-
-    static Long escolherParticipante() {
-        System.out.println("\nParticipantes:");
-        for (var p : participantes) {
-            System.out.printf("  %d) %s%n", p.getId(), p.getNome());
-        }
-        System.out.print("Escolha o id do participante: ");
-
-        try {
-            long id = Long.parseLong(in.nextLine());
-            boolean existe = participantes.stream().anyMatch(p -> p.getId() == id);
-            if (!existe) {
-                System.out.println("id inválido");
-                return null;
-            }
-            return id;
-        } catch (Exception e) {
-            System.out.println("entrada inválida");
-            return null;
-        }
-    }
-
-    static Long escolherProva() {
-        System.out.println("\nProvas:");
-        for (var p : provas) {
-            System.out.printf("  %d) %s%n", p.getId(), p.getTitulo());
-        }
-        System.out.print("Escolha o id da prova: ");
-
-        try {
-            long id = Long.parseLong(in.nextLine());
-            boolean existe = provas.stream().anyMatch(p -> p.getId() == id);
-            if (!existe) {
-                System.out.println("id inválido");
-                return null;
-            }
-            return id;
-        } catch (Exception e) {
-            System.out.println("entrada inválida");
-            return null;
         }
     }
 
