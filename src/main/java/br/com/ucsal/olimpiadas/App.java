@@ -18,8 +18,7 @@ public class App {
 
     private static final Scanner in = new Scanner(System.in);
 
-    // ✅ SRP - responsabilidade separada
-    private static final TabuleiroPrinter tabuleiroPrinter = new TabuleiroPrinter();
+    private static final TabuleiroService tabuleiroPrinter = new TabuleiroPrinter();
 
     public static void main(String[] args) {
         seed();
@@ -165,7 +164,7 @@ public class App {
             System.out.println(q.getEnunciado());
 
             System.out.println("Posição inicial:");
-            tabuleiroPrinter.imprimir(q.getFenInicial()); // ✅ SRP aplicado
+            tabuleiroPrinter.imprimir(q.getFenInicial());
 
             for (var alt : q.getAlternativas()) {
                 System.out.println(alt);

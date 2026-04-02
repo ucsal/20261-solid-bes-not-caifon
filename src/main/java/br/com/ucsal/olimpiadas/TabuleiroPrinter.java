@@ -1,6 +1,6 @@
 package br.com.ucsal.olimpiadas;
 
-public class TabuleiroPrinter {
+public class TabuleiroPrinter implements TabuleiroService {
 
     public void imprimir(String fen) {
         String parteTabuleiro = fen.split(" ")[0];
