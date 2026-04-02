@@ -17,8 +17,8 @@ public class App {
     static final List<Tentativa> tentativas = new ArrayList<>();
 
     private static final Scanner in = new Scanner(System.in);
-
     private static final TabuleiroService tabuleiroPrinter = new TabuleiroPrinter();
+    private static final CalculadoraNota calculadoraNota = new CalculadoraNotaPadrao();
 
     public static void main(String[] args) {
         seed();
@@ -189,25 +189,16 @@ public class App {
 
         tentativas.add(tentativa);
 
-        int nota = calcularNota(tentativa);
+        int nota = calculadoraNota.calcular(tentativa);
         System.out.println("\n--- Fim da Prova ---");
         System.out.println("Nota (acertos): " + nota + " / " + tentativa.getRespostas().size());
-    }
-
-    public static int calcularNota(Tentativa tentativa) {
-        int acertos = 0;
-        for (var r : tentativa.getRespostas()) {
-            if (r.isCorreta())
-                acertos++;
-        }
-        return acertos;
     }
 
     static void listarTentativas() {
         System.out.println("\n--- Tentativas ---");
         for (var t : tentativas) {
             System.out.printf("#%d | participante=%d | prova=%d | nota=%d/%d%n", t.getId(),
-                    t.getParticipanteId(), t.getProvaId(), calcularNota(t), t.getRespostas().size());
+                    t.getParticipanteId(), t.getProvaId(), calculadoraNota.calcular(t), t.getRespostas().size());
         }
     }
 
@@ -254,7 +245,6 @@ public class App {
     }
 
     static void seed() {
-
         var prova = new Prova();
         prova.setId(proximaProvaId++);
         prova.setTitulo("Olimpíada 2026 • Nível 1 • Prova A");
